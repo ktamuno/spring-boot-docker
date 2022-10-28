@@ -3,8 +3,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: javawebappdeployment
+  namespace: kenny
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: javawebapp
@@ -22,7 +23,7 @@ spec:
     spec:
       containers:
       - name: javawebappcontainer
-        image: mylandmarktech/java-web-app
+        image: kenthadocker/kenny-image:2 
         ports:
         - containerPort: 8080 
 ---
@@ -30,10 +31,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: javawebappservice
+  namespace: kenny
 spec:
-  type: ClusterIP
+  type: NodePort  #ClusterIP
   selector:
      app: javawebapp
   ports:
   - port: 80
     targetPort: 8080
+  
